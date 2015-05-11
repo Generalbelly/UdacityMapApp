@@ -7,3 +7,21 @@
 //
 
 import Foundation
+
+class UdacityWaypoint: NSObject {
+
+    var latitude: Double
+    var longitude: Double
+    var name: String
+    var info: String?
+
+    init(latitude: Double, longitude: Double, name: String, info: String?) {
+
+        self.latitude = latitude
+        self.longitude = longitude
+        self.name = name
+        self.info = info
+
+    }
+
+}

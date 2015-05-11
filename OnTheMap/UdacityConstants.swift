@@ -7,3 +7,16 @@
 //
 
 import Foundation
+
+extension UdacityClient {
+
+    struct Constants {
+
+        static let PostURL = "https://www.udacity.com/api/session"
+        static let GetURL = "https://www.udacity.com/api/users/"
+        static let UdacityURL = "https://www.udacity.com"
+
+    }
+
+
+}

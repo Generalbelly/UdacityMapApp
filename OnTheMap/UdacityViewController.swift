@@ -7,29 +7,37 @@
 //
 
 import UIKit
+import WebKit
 
 class UdacityViewController: UIViewController {
 
+    var wkWebView: WKWebView?
+    var urlString = UdacityClient.Constants.UdacityURL
+    @IBOutlet weak var udacityView: UIView!
+
     override func viewDidLoad() {
+
         super.viewDidLoad()
+        wkWebView = WKWebView()
 
-        // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+    override func viewWillAppear(animated: Bool) {
 
-    /*
-    // MARK: - Navigation
+        super.viewWillAppear(animated)
+        wkWebViewConfig()
+        udacityView.addSubview(wkWebView!)
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
-    */
+
+    func wkWebViewConfig() {
+
+        wkWebView?.frame = udacityView.frame
+        let url = NSURL(string: urlString)
+        let req = NSURLRequest(URL: url!)
+        wkWebView?.loadRequest(req)
+
+    }
+
 
 }

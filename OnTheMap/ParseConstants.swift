@@ -7,3 +7,13 @@
 //
 
 import Foundation
+
+extension ParseClient {
+
+    struct Constants {
+
+        static let URL = "https://api.parse.com/1/classes/StudentLocation"
+
+    }
+
+}
