@@ -15,10 +15,12 @@
 		0069760B1AEB32F100F7DD9A /* OnTheMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0069760A1AEB32F100F7DD9A /* OnTheMapTests.swift */; };
 		006976181AEBBA9400F7DD9A /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006976171AEBBA9400F7DD9A /* UdacityClient.swift */; };
 		006E5C091AFDB11700565EA4 /* UdacityAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006E5C081AFDB11700565EA4 /* UdacityAnnotation.swift */; };
-		006E5C0B1AFDB94F00565EA4 /* UdacityWaypoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006E5C0A1AFDB94F00565EA4 /* UdacityWaypoint.swift */; };
 		00EC35411AFE4241009006B9 /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EC35401AFE4241009006B9 /* ParseClient.swift */; };
 		00EC35431AFE4253009006B9 /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EC35421AFE4253009006B9 /* ParseConstants.swift */; };
+		00F03F571B081E2000077403 /* PostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F03F561B081E2000077403 /* PostingViewController.swift */; };
+		00F0F2BC1B0398AB00FB7769 /* UdacityStudent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F0F2BB1B0398AB00FB7769 /* UdacityStudent.swift */; };
 		00F0F9A01AF4D4600003B4B2 /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F0F99F1AF4D4600003B4B2 /* UdacityConstants.swift */; };
+		00F17DB61B08B896002A3A89 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F17DB51B08B895002A3A89 /* UIColorExtension.swift */; };
 		00F1EDF81AF65C260074E695 /* UdacityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F1EDF71AF65C260074E695 /* UdacityViewController.swift */; };
 		00F1EDFA1AF723D20074E695 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F1EDF91AF723D20074E695 /* MapViewController.swift */; };
 		00F1EDFC1AF723E00074E695 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F1EDFB1AF723E00074E695 /* ListViewController.swift */; };
@@ -49,10 +51,12 @@
 		006976141AEB3D2A00F7DD9A /* OnTheMap-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OnTheMap-Bridging-Header.h"; sourceTree = "<group>"; };
 		006976171AEBBA9400F7DD9A /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		006E5C081AFDB11700565EA4 /* UdacityAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityAnnotation.swift; sourceTree = "<group>"; };
-		006E5C0A1AFDB94F00565EA4 /* UdacityWaypoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityWaypoint.swift; sourceTree = "<group>"; };
 		00EC35401AFE4241009006B9 /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 		00EC35421AFE4253009006B9 /* ParseConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
+		00F03F561B081E2000077403 /* PostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostingViewController.swift; sourceTree = "<group>"; };
+		00F0F2BB1B0398AB00FB7769 /* UdacityStudent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityStudent.swift; sourceTree = "<group>"; };
 		00F0F99F1AF4D4600003B4B2 /* UdacityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConstants.swift; sourceTree = "<group>"; };
+		00F17DB51B08B895002A3A89 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		00F1EDF71AF65C260074E695 /* UdacityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityViewController.swift; sourceTree = "<group>"; };
 		00F1EDF91AF723D20074E695 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		00F1EDFB1AF723E00074E695 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
@@ -108,12 +112,14 @@
 				00F0F99F1AF4D4600003B4B2 /* UdacityConstants.swift */,
 				00EC35401AFE4241009006B9 /* ParseClient.swift */,
 				00EC35421AFE4253009006B9 /* ParseConstants.swift */,
-				006E5C0A1AFDB94F00565EA4 /* UdacityWaypoint.swift */,
+				00F0F2BB1B0398AB00FB7769 /* UdacityStudent.swift */,
 				006E5C081AFDB11700565EA4 /* UdacityAnnotation.swift */,
 				006975F61AEB32F100F7DD9A /* LoginViewController.swift */,
 				00F1EDF91AF723D20074E695 /* MapViewController.swift */,
 				00F1EDFB1AF723E00074E695 /* ListViewController.swift */,
+				00F03F561B081E2000077403 /* PostingViewController.swift */,
 				00F1EDF71AF65C260074E695 /* UdacityViewController.swift */,
+				00F17DB51B08B895002A3A89 /* UIColorExtension.swift */,
 				006975F81AEB32F100F7DD9A /* Main.storyboard */,
 				006975FB1AEB32F100F7DD9A /* Images.xcassets */,
 				006975FD1AEB32F100F7DD9A /* LaunchScreen.xib */,
@@ -301,12 +307,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				006E5C091AFDB11700565EA4 /* UdacityAnnotation.swift in Sources */,
+				00F17DB61B08B896002A3A89 /* UIColorExtension.swift in Sources */,
 				00F1EDF81AF65C260074E695 /* UdacityViewController.swift in Sources */,
 				00EC35431AFE4253009006B9 /* ParseConstants.swift in Sources */,
+				00F0F2BC1B0398AB00FB7769 /* UdacityStudent.swift in Sources */,
 				00F1EDFA1AF723D20074E695 /* MapViewController.swift in Sources */,
+				00F03F571B081E2000077403 /* PostingViewController.swift in Sources */,
 				006975F71AEB32F100F7DD9A /* LoginViewController.swift in Sources */,
 				00F0F9A01AF4D4600003B4B2 /* UdacityConstants.swift in Sources */,
-				006E5C0B1AFDB94F00565EA4 /* UdacityWaypoint.swift in Sources */,
 				00EC35411AFE4241009006B9 /* ParseClient.swift in Sources */,
 				006975F51AEB32F100F7DD9A /* AppDelegate.swift in Sources */,
 				006976181AEBBA9400F7DD9A /* UdacityClient.swift in Sources */,

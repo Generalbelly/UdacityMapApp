@@ -155,6 +155,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
             if user == nil {
 
                 self.displayAlertView("Facebook login was unsuccessful")
+                self.removeAivandTv()
 
             } else if user!.isNew {
 
@@ -172,18 +173,27 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
 
     func loginCompleted() {
 
-        self.activityIndicator.stopAnimating()
-        self.translucentView?.removeFromSuperview()
+        removeAivandTv()
         UdacityClient.sharedInstance.taskForGetMethod()
-        self.performSegueWithIdentifier("segueToHome", sender: self)
+        performSegueWithIdentifier("segueToHome", sender: self)
+
+    }
+
+    func removeAivandTv() {
+
+        activityIndicator.stopAnimating()
+        translucentView?.removeFromSuperview()
 
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 
-        if segue.identifier == "segueToHome" {
+        switch segue.identifier! {
 
+        case "segueToHome":
             ParseClient.sharedInstance.taskForGetMethod(100)
+        default:
+            break
 
         }
 
@@ -192,7 +202,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
 
     @IBAction func signUpTapped(sender: AnyObject) {
 
-        performSegueWithIdentifier("segueToUdacity", sender: self)
+        let app = UIApplication.sharedApplication()
+        app.openURL(NSURL(string: UdacityClient.Constants.UdacityURL)!)
 
     }
 
@@ -245,8 +256,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
     override func viewWillAppear(animated: Bool) {
 
         super.viewWillAppear(animated)
-        self.emailField.text = nil
-        self.passwordField.text = nil
+        emailField.text = nil
+        passwordField.text = nil
         subscribeToKeyboardNotification()
 
     }

@@ -8,7 +8,7 @@
 
 import MapKit
 
-extension UdacityWaypoint: MKAnnotation {
+extension UdacityStudent: MKAnnotation {
 
     var coordinate: CLLocationCoordinate2D { return CLLocationCoordinate2D(latitude: latitude, longitude: longitude) }
 

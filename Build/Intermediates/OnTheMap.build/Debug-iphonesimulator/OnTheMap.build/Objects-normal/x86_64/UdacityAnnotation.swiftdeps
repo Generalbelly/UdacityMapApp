@@ -1,21 +1,21 @@
 ### Swift dependencies file v0 ###
 provides:
 nominals:
-- "C8OnTheMap15UdacityWaypoint"
+- "C8OnTheMap14UdacityStudent"
 class-members:
-- "title"
-- "subtitle"
 - "coordinate"
+- "subtitle"
+- "title"
 top-level:
 - "CLLocationCoordinate2D"
+- "UdacityStudent"
 - "MKAnnotation"
-- "UdacityWaypoint"
 - "String"
 member-access:
-- !private "VSC22CLLocationCoordinate2D"
-- "PSo12MKAnnotation"
 - "CSo8NSObject"
-- "C8OnTheMap15UdacityWaypoint"
+- "PSo12MKAnnotation"
+- "C8OnTheMap14UdacityStudent"
+- !private "VSC22CLLocationCoordinate2D"
 dynamic-lookup:
 cross-module:
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/Swift.swiftmodule"
