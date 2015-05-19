@@ -57,20 +57,35 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     func fetchStudentinfo() {
 
-        ParseClient.sharedInstance.taskForGetMethod(100)
-        while ParseClient.sharedInstance.studentInfo == nil {
+        ParseClient.sharedInstance.taskForGetMethod(100) {
+
+             (success: Bool, res: Int?, error: NSError?) -> Void in
+
+            if success == true {
+
+                for item in ParseClient.sharedInstance.studentInfo! {
+            
+                let studentInfo = UdacityStudent(data: item)
+                self.udacityStudents.append(studentInfo)
+
+                }
+                self.activityIndicator.stopAnimating()
+
+            } else {
+
+                self.displayError(success, res: res, error:error)
+
+            }
+
+
+        }
+        while udacityStudents.count < 99 {
 
             self.activityIndicator.hidden = false
             self.activityIndicator.startAnimating()
 
         }
-        self.activityIndicator.stopAnimating()
-        for item in ParseClient.sharedInstance.studentInfo! {
-        
-            let studentInfo = UdacityStudent.createAnInstance(item)
-            self.udacityStudents.append(studentInfo!)
 
-        }
 
     }
 
@@ -113,5 +128,49 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
 
     }
-    
+
+    func displayError(success: Bool, res: Int?, error: NSError?) {
+
+        if res != nil {
+
+            self.statusCodeChecker(res!)
+            
+        } else {
+
+            self.displayAlertView("Networking Error")
+
+        }
+
+    }
+
+    func statusCodeChecker(statusCode: Int) {
+
+        switch statusCode {
+
+        case 401:
+            self.displayAlertView("Either username(email) or password is not correct")
+        case 403:
+            self.displayAlertView("You are not allowed to access to this")
+        default:
+            break
+
+        }
+
+    }
+
+    func displayAlertView(message: String) {
+
+        let alertController = UIAlertController(title: "Login Failed", message: message, preferredStyle: .Alert)
+
+        let action = UIAlertAction(title: "OK", style: .Default) { (action) in
+
+            self.dismissViewControllerAnimated(true, completion: nil)
+
+        }
+
+        alertController.addAction(action)
+        self.presentViewController(alertController, animated: true, completion: nil)
+
+    }
+
 }

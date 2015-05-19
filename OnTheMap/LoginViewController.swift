@@ -31,7 +31,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
         case (false, false):
             UdacityClient.sharedInstance.email = emailField.text
             UdacityClient.sharedInstance.password = passwordField.text
-            getSessionID(0)
+            getSessionID(UdacityClient.LoginMethod.Normal)
         default:
             break
 
@@ -43,8 +43,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
 
         switch statusCode {
 
-        case 403:
+        case 401:
             self.displayAlertView("Either username(email) or password is not correct")
+        case 403:
+            self.displayAlertView("You are not allowed to access to this")
         default:
             break
 
@@ -69,38 +71,59 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
 
 
 
-    func getSessionID(n: Int) {
+    func getSessionID(m: UdacityClient.LoginMethod) {
 
-        UdacityClient.sharedInstance.taskForPostMethod(n)
-        if UdacityClient.sharedInstance.sessionId != nil {
+        UdacityClient.sharedInstance.taskForPostMethod(m) { (success: Bool, res: Int?, error: NSError?) -> Void in
 
-            self.chooseLoginMethod(n)
+            switch success {
 
-        } else {
+            case false:
 
-            while UdacityClient.sharedInstance.sessionId == nil {
+                self.displayError(success, res: res, error:error)
 
-                if self.activityIndicator.isAnimating() == false {
+            case true:
 
-                    self.translucentView = UIView(frame: self.view.frame)
-                    self.translucentView!.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
-                    self.view.addSubview(self.translucentView!)
-                    self.activityIndicator.hidden = false
-                    self.activityIndicator.startAnimating()
+                self.chooseLoginMethod(m)
 
-                }
+            default:
+                break
 
             }
 
-            self.chooseLoginMethod(n)
+        }
+        while UdacityClient.sharedInstance.sessionId == nil {
+
+            if self.activityIndicator.isAnimating() == false {
+
+                self.translucentView = UIView(frame: self.view.frame)
+                self.translucentView!.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
+                self.view.addSubview(self.translucentView!)
+                self.activityIndicator.hidden = false
+                self.activityIndicator.startAnimating()
+
+            }
 
         }
 
     }
 
-    func chooseLoginMethod(n: Int) {
+    func displayError(success: Bool, res: Int?, error: NSError?) {
 
-        if n == 0 {
+        if res != nil {
+
+            self.statusCodeChecker(res!)
+            
+        } else {
+
+            self.displayAlertView("Networking Error")
+
+        }
+
+    }
+
+    func chooseLoginMethod(m: UdacityClient.LoginMethod) {
+
+        if m == .Normal {
 
             self.normalLogin()
 
@@ -174,8 +197,25 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
     func loginCompleted() {
 
         removeAivandTv()
-        UdacityClient.sharedInstance.taskForGetMethod()
-        performSegueWithIdentifier("segueToHome", sender: self)
+        UdacityClient.sharedInstance.taskForGetMethod() { (success: Bool, res: Int?, error: NSError?) -> Void in
+
+            switch success {
+
+            case false:
+
+                self.displayError(success, res: res, error:error)
+
+            case true:
+
+                self.performSegueWithIdentifier("segueToHome", sender: self)
+
+            default:
+                break
+
+            }
+
+
+        }
 
     }
 
@@ -185,20 +225,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
         translucentView?.removeFromSuperview()
 
     }
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
-        switch segue.identifier! {
-
-        case "segueToHome":
-            ParseClient.sharedInstance.taskForGetMethod(100)
-        default:
-            break
-
-        }
-
-    }
-
 
     @IBAction func signUpTapped(sender: AnyObject) {
 
@@ -217,7 +243,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
 
             let token = FBSDKAccessToken.currentAccessToken()
             UdacityClient.sharedInstance.fbToken = token.tokenString
-            self.getSessionID(1)
+            self.getSessionID(UdacityClient.LoginMethod.Facebook)
 
         } else {
 
@@ -239,7 +265,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
             if FBSDKAccessToken.currentAccessToken() != nil {
 
                 UdacityClient.sharedInstance.fbToken = FBSDKAccessToken.currentAccessToken().tokenString
-                self.getSessionID(1)
+                self.getSessionID(UdacityClient.LoginMethod.Facebook)
 
             }
 

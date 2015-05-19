@@ -138,6 +138,8 @@ SWIFT_CLASS("_TtC8OnTheMap18ListViewController")
 - (UITableViewCell * __nonnull)tableView:(UITableView * __nonnull)tableView cellForRowAtIndexPath:(NSIndexPath * __nonnull)indexPath;
 - (void)tableView:(UITableView * __nonnull)tableView didSelectRowAtIndexPath:(NSIndexPath * __nonnull)indexPath;
 - (void)prepareForSegue:(UIStoryboardSegue * __nonnull)segue sender:(id __nullable)sender;
+- (void)statusCodeChecker:(NSInteger)statusCode;
+- (void)displayAlertView:(NSString * __nonnull)message;
 - (SWIFT_NULLABILITY(nonnull) instancetype)initWithNibName:(NSString * __nullable)nibNameOrNil bundle:(NSBundle * __nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (SWIFT_NULLABILITY(nonnull) instancetype)initWithCoder:(NSCoder * __nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
 @end
@@ -160,13 +162,10 @@ SWIFT_CLASS("_TtC8OnTheMap19LoginViewController")
 - (IBAction)loginButtonTapped:(id __nonnull)sender;
 - (void)statusCodeChecker:(NSInteger)statusCode;
 - (void)displayAlertView:(NSString * __nonnull)message;
-- (void)getSessionID:(NSInteger)n;
-- (void)chooseLoginMethod:(NSInteger)n;
 - (void)normalLogin;
 - (void)fbLogin;
 - (void)loginCompleted;
 - (void)removeAivandTv;
-- (void)prepareForSegue:(UIStoryboardSegue * __nonnull)segue sender:(id __nullable)sender;
 - (IBAction)signUpTapped:(id __nonnull)sender;
 - (void)viewDidLoad;
 - (void)loginButton:(FBSDKLoginButton * __null_unspecified)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult * __null_unspecified)result error:(NSError * __null_unspecified)error;
@@ -208,14 +207,11 @@ SWIFT_CLASS("_TtC8OnTheMap17MapViewController")
 - (SWIFT_NULLABILITY(nonnull) instancetype)initWithCoder:(NSCoder * __nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
 @end
 
-@class PostingViewController;
 @class NSURLSession;
 
 SWIFT_CLASS("_TtC8OnTheMap11ParseClient")
 @interface ParseClient : NSObject
 + (ParseClient * __nonnull)sharedInstance;
-@property (nonatomic) MapViewController * __nonnull mvc;
-@property (nonatomic) PostingViewController * __nonnull pvc;
 @property (nonatomic) NSURLSession * __nonnull session;
 @property (nonatomic, copy) NSString * __nullable objectId;
 @property (nonatomic, copy) NSArray * __nullable studentInfo;
@@ -225,19 +221,19 @@ SWIFT_CLASS("_TtC8OnTheMap11ParseClient")
 @property (nonatomic, copy) NSString * __nullable mapString;
 @property (nonatomic, copy) NSString * __nullable mediaURL;
 - (SWIFT_NULLABILITY(nonnull) instancetype)init OBJC_DESIGNATED_INITIALIZER;
-- (void)taskForPostMethod;
-- (void)taskForGetMethod:(NSInteger)limit;
 @end
 
 
 @interface ParseClient (SWIFT_EXTENSION(OnTheMap))
 @end
 
+@class MKPlacemark;
 @class UIButton;
 
 SWIFT_CLASS("_TtC8OnTheMap21PostingViewController")
 @interface PostingViewController : UIViewController <UITextFieldDelegate, MKMapViewDelegate>
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView * __null_unspecified activityIndicator;
+@property (nonatomic) MKPlacemark * __nullable location;
 @property (nonatomic, weak) IBOutlet UIButton * __null_unspecified submitButton;
 @property (nonatomic, weak) IBOutlet UIButton * __null_unspecified findButton;
 - (IBAction)submitTapped:(id __nonnull)sender;
@@ -270,7 +266,6 @@ SWIFT_CLASS("_TtC8OnTheMap21PostingViewController")
 SWIFT_CLASS("_TtC8OnTheMap13UdacityClient")
 @interface UdacityClient : NSObject
 + (UdacityClient * __nonnull)sharedInstance;
-@property (nonatomic) LoginViewController * __nonnull lvc;
 @property (nonatomic) NSURLSession * __nonnull session;
 @property (nonatomic, copy) NSString * __nullable email;
 @property (nonatomic, copy) NSString * __nullable password;
@@ -280,8 +275,6 @@ SWIFT_CLASS("_TtC8OnTheMap13UdacityClient")
 @property (nonatomic, copy) NSString * __nullable firstName;
 @property (nonatomic, copy) NSString * __nullable lastName;
 - (SWIFT_NULLABILITY(nonnull) instancetype)init OBJC_DESIGNATED_INITIALIZER;
-- (void)taskForPostMethod:(NSInteger)n;
-- (void)taskForGetMethod;
 @end
 
 
@@ -296,7 +289,7 @@ SWIFT_CLASS("_TtC8OnTheMap14UdacityStudent")
 @property (nonatomic, readonly, copy) NSString * __nonnull name;
 @property (nonatomic, copy) NSString * __nonnull info;
 - (SWIFT_NULLABILITY(nonnull) instancetype)initWithLatitude:(double)latitude longitude:(double)longitude name:(NSString * __nonnull)name info:(NSString * __nonnull)info OBJC_DESIGNATED_INITIALIZER;
-+ (UdacityStudent * __nullable)createAnInstance:(NSDictionary * __nonnull)data;
+- (SWIFT_NULLABILITY(nonnull) instancetype)initWithData:(NSDictionary * __nonnull)data OBJC_DESIGNATED_INITIALIZER;
 @end
 
 

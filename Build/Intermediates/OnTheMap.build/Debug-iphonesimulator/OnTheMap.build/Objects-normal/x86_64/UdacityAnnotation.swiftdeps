@@ -7,15 +7,15 @@ class-members:
 - "subtitle"
 - "title"
 top-level:
-- "CLLocationCoordinate2D"
-- "UdacityStudent"
 - "MKAnnotation"
+- "UdacityStudent"
 - "String"
+- "CLLocationCoordinate2D"
 member-access:
-- "CSo8NSObject"
 - "PSo12MKAnnotation"
-- "C8OnTheMap14UdacityStudent"
+- "CSo8NSObject"
 - !private "VSC22CLLocationCoordinate2D"
+- "C8OnTheMap14UdacityStudent"
 dynamic-lookup:
 cross-module:
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/Swift.swiftmodule"

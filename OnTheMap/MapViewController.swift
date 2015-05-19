@@ -57,7 +57,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func addAnnotations() {
 
         fetchStudentLocation()
-        activityIndicator.stopAnimating()
         mapView.addAnnotations(udacityStudents)
         mapView.showAnnotations(udacityStudents, animated: true)
 
@@ -70,22 +69,49 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             self.mapView.removeAnnotations(udacityStudents)
 
         }
-        ParseClient.sharedInstance.taskForGetMethod(100)
-        while ParseClient.sharedInstance.studentInfo == nil {
+        ParseClient.sharedInstance.taskForGetMethod(100) { (success: Bool, res: Int?, error: NSError?) -> Void in
+
+                if success == true {
+
+                    for item in ParseClient.sharedInstance.studentInfo! {
+
+                        let studentInfo = UdacityStudent(data: item)
+                        self.udacityStudents.append(studentInfo)
+
+                    }
+                    self.activityIndicator.stopAnimating()
+
+                } else {
+
+                    self.displayError(success, res: res, error:error)
+
+                }
+
+        }
+        while udacityStudents.count < 99 {
 
             self.activityIndicator.hidden = false
             self.activityIndicator.startAnimating()
 
         }
-        for item in ParseClient.sharedInstance.studentInfo! {
-        
-            let studentInfo = UdacityStudent.createAnInstance(item)
-            self.udacityStudents.append(studentInfo!)
-
-        }
-        self.activityIndicator.stopAnimating()
 
     }
+
+    
+    func displayError(success: Bool, res: Int?, error: NSError?) {
+
+        if res != nil {
+
+            self.statusCodeChecker(res!)
+            
+        } else {
+
+            self.displayAlertView("Networking Error")
+
+        }
+
+    }
+
 
     struct Constants {
 

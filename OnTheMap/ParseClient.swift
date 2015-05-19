@@ -12,9 +12,6 @@ class ParseClient: NSObject {
 
     static let sharedInstance = ParseClient()
 
-    var mvc = MapViewController()
-    var pvc = PostingViewController()
-
     var session: NSURLSession
     var objectId: String?
     var studentInfo: [[String: AnyObject]]?
@@ -34,7 +31,7 @@ class ParseClient: NSObject {
 
     }
 
-    func taskForPostMethod() {
+    func taskForPostMethod(completionHandler: (success: Bool, res: Int?, error: NSError?) -> Void) {
 
         let urlString = ParseClient.Constants.URL
         let url = NSURL(string: urlString)
@@ -50,12 +47,7 @@ class ParseClient: NSObject {
 
                 if res.statusCode != 200 {
 
-                    dispatch_async(dispatch_get_main_queue()) {
-
-                        let statusCode = res.statusCode
-                        self.pvc.statusCodeChecker(statusCode)
-
-                    }
+                    completionHandler(success: false, res: res.statusCode, error: nil)
 
                 }
 
@@ -63,11 +55,7 @@ class ParseClient: NSObject {
 
             if downloadingError != nil {
 
-                dispatch_async(dispatch_get_main_queue()) {
-
-                    self.pvc.displayAlertView("Networking Error")
-
-                }
+                completionHandler(success: false, res: nil, error: downloadingError)
 
             } else {
 
@@ -82,6 +70,8 @@ class ParseClient: NSObject {
 
                 }
 
+                completionHandler(success: true, res: nil, error: nil)
+
             }
 
         }
@@ -90,7 +80,7 @@ class ParseClient: NSObject {
 
     }
 
-    func taskForGetMethod(limit: Int) {
+    func taskForGetMethod(limit: Int, completionHandler: (success: Bool, res: Int?, error: NSError?) -> Void) {
 
         var dataArray: [[String : AnyObject]]?
         let urlString = ParseClient.Constants.URL + "?limit=\(limit)"
@@ -104,12 +94,7 @@ class ParseClient: NSObject {
 
                 if res.statusCode != 200 {
 
-                    dispatch_async(dispatch_get_main_queue()) {
-
-                        let statusCode = res.statusCode
-                        self.mvc.statusCodeChecker(statusCode)
-
-                    }
+                    completionHandler(success: false, res: res.statusCode, error: downloadingError)
 
                 }
 
@@ -117,11 +102,7 @@ class ParseClient: NSObject {
 
             if downloadingError != nil {
 
-                dispatch_async(dispatch_get_main_queue()) {
-
-                    self.mvc.displayAlertView("Networking Error")
-
-                }
+                completionHandler(success: false, res: nil, error: downloadingError)
 
             } else {
 
@@ -134,6 +115,8 @@ class ParseClient: NSObject {
                     }
 
                 }
+
+                completionHandler(success: true, res: nil, error: nil)
 
             }
 

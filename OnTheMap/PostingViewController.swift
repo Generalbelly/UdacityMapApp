@@ -8,10 +8,13 @@
 
 import UIKit
 import MapKit
+import Foundation
 
 class PostingViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegate {
 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    var location: MKPlacemark?
+    
     var lat: Double?
     var lon: Double?
     @IBOutlet weak var submitButton: UIButton!
@@ -20,23 +23,46 @@ class PostingViewController: UIViewController, UITextFieldDelegate, MKMapViewDel
 
         if !self.linkTextField.text.isEmpty {
 
-            ParseClient.sharedInstance.mapString = self.mapTextField.text
-            ParseClient.sharedInstance.mediaURL = self.linkTextField.text
-            ParseClient.sharedInstance.latitude = self.lat!
-            ParseClient.sharedInstance.longitude = self.lon!
-            ParseClient.sharedInstance.taskForPostMethod()
-            while ParseClient.sharedInstance.objectId == nil {
+            let url = NSURL(string: self.linkTextField.text!)
+            if url != nil {
+                if (url!.scheme != nil && url!.host != nil) {
 
-                self.activityIndicator.hidden = false
-                self.activityIndicator.startAnimating()
+                    ParseClient.sharedInstance.mapString = self.mapTextField.text
+                    ParseClient.sharedInstance.mediaURL = self.linkTextField.text
+                    ParseClient.sharedInstance.latitude = self.lat!
+                    ParseClient.sharedInstance.longitude = self.lon!
+                    ParseClient.sharedInstance.taskForPostMethod(){ (success: Bool, res: Int?, error: NSError?) -> Void in
+
+                        if success == true {
+
+                            self.activityIndicator.stopAnimating()
+                            self.dismissViewControllerAnimated(true, completion: nil)
+
+                        } else {
+
+                            self.displayError(success, res: res, error:error)
+
+                        }
+
+                    }
+                    while ParseClient.sharedInstance.objectId == nil {
+
+                        self.activityIndicator.hidden = false
+                        self.activityIndicator.startAnimating()
+
+                    }
+
+                }
+
+            } else {
+
+                self.displayAlertView("The url is invalid.")
 
             }
-            self.activityIndicator.stopAnimating()
-            self.dismissViewControllerAnimated(true, completion: nil)
 
         } else {
 
-            self.displayAlertView("You gotta put a link to submit")
+            self.displayAlertView("You gotta put a link to submit.")
 
         }
 
@@ -52,9 +78,12 @@ class PostingViewController: UIViewController, UITextFieldDelegate, MKMapViewDel
 
     func searchGeocodeForLocation() {
 
+        activityIndicator.hidden = false
+        activityIndicator.startAnimating()
         var geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(mapTextField.text, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
+        geocoder.geocodeAddressString(mapTextField.text){ (placemarks: [AnyObject]!, error: NSError!) -> Void in
 
+            self.activityIndicator.stopAnimating()
             if error != nil {
 
                 self.displayAlertView("Sorry, we couldn't find your location...")
@@ -64,18 +93,19 @@ class PostingViewController: UIViewController, UITextFieldDelegate, MKMapViewDel
 
                 self.lat = placemark.location.coordinate.latitude
                 self.lon = placemark.location.coordinate.longitude
-                let location = MKPlacemark(placemark: placemark)
+                self.location = MKPlacemark(placemark: placemark)
                 self.mapView.hidden = false
                 self.linkTextField.hidden = false
                 self.submitButton.hidden = false
                 self.findButton.hidden = true
                 self.view.backgroundColor = UIColor.rgb(0, g: 89, b: 187, alpha: 1)
-                self.mapView.addAnnotation(location)
-                self.mapView.showAnnotations([location], animated: true)
+                self.activityIndicator.stopAnimating()
+                self.mapView.addAnnotation(self.location!)
+                self.mapView.showAnnotations([self.location!], animated: true)
 
             }
 
-        })
+        }
 
     }
 
@@ -107,7 +137,7 @@ class PostingViewController: UIViewController, UITextFieldDelegate, MKMapViewDel
         switch statusCode {
 
         case 400:
-            self.displayAlertView("Sorry, we couldn't post your data")
+            self.displayAlertView("Sorry, we couldn't post your data.")
         default:
         break
 
@@ -173,6 +203,20 @@ class PostingViewController: UIViewController, UITextFieldDelegate, MKMapViewDel
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
         return keyboardSize.CGRectValue().height
+
+    }
+
+        func displayError(success: Bool, res: Int?, error: NSError?) {
+
+        if res != nil {
+
+            self.statusCodeChecker(res!)
+            
+        } else {
+
+            self.displayAlertView("Networking Error")
+
+        }
 
     }
 

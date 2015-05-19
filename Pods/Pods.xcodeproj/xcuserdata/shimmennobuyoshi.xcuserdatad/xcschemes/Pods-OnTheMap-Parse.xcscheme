@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B4102FEB388DAA153E19D40D"
+               BlueprintIdentifier = "730E19891E73B59DC0A99A07"
                BuildableName = "libPods-OnTheMap-Parse.a"
                BlueprintName = "Pods-OnTheMap-Parse"
                ReferencedContainer = "container:Pods.xcodeproj">

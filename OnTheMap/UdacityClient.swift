@@ -12,8 +12,6 @@ class UdacityClient: NSObject {
 
     static let sharedInstance = UdacityClient()
 
-    var lvc = LoginViewController()
-
     var session: NSURLSession
     var email: String?
     var password: String?
@@ -29,7 +27,14 @@ class UdacityClient: NSObject {
 
     }
 
-    func taskForPostMethod(n: Int) {
+    enum LoginMethod: Int {
+
+        case Normal = 0
+        case Facebook = 1
+
+    }
+
+    func taskForPostMethod(m: LoginMethod, completionHandler: (success: Bool, res: Int?, error: NSError?) -> Void) {
 
         let urlString = UdacityClient.Constants.PostURL
         let url = NSURL(string: urlString)
@@ -37,11 +42,11 @@ class UdacityClient: NSObject {
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        switch n {
+        switch m {
 
-        case 0:
+        case .Normal:
             request.HTTPBody = "{\"udacity\": {\"username\": \"\(self.email!)\", \"password\": \"\(self.password!)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
-        case 1:
+        case .Facebook:
             request.HTTPBody = "{\"facebook_mobile\": {\"access_token\": \"\(self.fbToken!)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
         default:
             break
@@ -54,12 +59,7 @@ class UdacityClient: NSObject {
 
                 if res.statusCode != 200 {
 
-                    dispatch_async(dispatch_get_main_queue()) {
-
-                        let statusCode = res.statusCode
-                        self.lvc.statusCodeChecker(statusCode)
-
-                    }
+                    completionHandler(success: false, res: res.statusCode, error: downloadingError)
 
                 }
 
@@ -67,11 +67,8 @@ class UdacityClient: NSObject {
 
             if downloadingError != nil {
 
-                dispatch_async(dispatch_get_main_queue()) {
+                completionHandler(success: false, res: nil, error: downloadingError)
 
-                    self.lvc.displayAlertView("Networking Error")
-
-                }
 
             } else {
 
@@ -92,6 +89,8 @@ class UdacityClient: NSObject {
 
                     }
 
+                    completionHandler(success: true, res: nil, error: nil)
+
                 }
 
             }
@@ -102,7 +101,7 @@ class UdacityClient: NSObject {
 
     }
 
-    func taskForGetMethod() {
+    func taskForGetMethod(completionHandler: (success: Bool, res: Int?, error: NSError?) -> Void) {
 
         let urlString = UdacityClient.Constants.GetURL + userId!
         let url = NSURL(string: urlString)
@@ -113,12 +112,7 @@ class UdacityClient: NSObject {
 
                 if res.statusCode != 200 {
 
-                    dispatch_async(dispatch_get_main_queue()) {
-
-                        let statusCode = res.statusCode
-                        self.lvc.statusCodeChecker(statusCode)
-
-                    }
+                    completionHandler(success: false, res: res.statusCode, error: downloadingError)
 
                 }
 
@@ -126,11 +120,7 @@ class UdacityClient: NSObject {
 
             if downloadingError != nil {
 
-                dispatch_async(dispatch_get_main_queue()) {
-
-                    self.lvc.displayAlertView("Networking Error")
-
-                }
+                completionHandler(success: false, res: nil, error: downloadingError)
 
             } else {
 
@@ -147,6 +137,8 @@ class UdacityClient: NSObject {
                         self.lastName = lastName
 
                     }
+
+                    completionHandler(success: true, res: nil, error: nil)
 
                 }
 

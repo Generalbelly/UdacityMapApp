@@ -22,20 +22,18 @@ class UdacityStudent: NSObject {
         self.name = name
         self.info = info
 
-        super.init()
-
     }
 
-        class func createAnInstance(data: [String: AnyObject]) -> UdacityStudent? {
+    init(data: [String: AnyObject]) {
 
         var firstName = data["firstName"] as! String
         var lastName = data["lastName"] as! String
-        var latitude = data["latitude"] as! Double
-        var longitude = data["longitude"] as! Double
-        var info = data["mediaURL"] as! String
-        var annotation = UdacityStudent(latitude: latitude, longitude: longitude, name: "\(firstName) \(lastName)", info: info)
 
-        return UdacityStudent(latitude: latitude, longitude: longitude, name: "\(firstName) \(lastName)", info: info)
+        self.name = "\(firstName) \(lastName)"
+        self.latitude = data["latitude"] as! Double
+        self.longitude = data["longitude"] as! Double
+        self.info = data["mediaURL"] as! String
+    
     }
 
 }
