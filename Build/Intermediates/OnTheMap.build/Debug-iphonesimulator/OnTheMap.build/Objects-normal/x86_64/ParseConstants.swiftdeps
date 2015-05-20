@@ -5,8 +5,8 @@ nominals:
 - "VC8OnTheMap11ParseClient9Constants"
 class-members:
 top-level:
-- "StringLiteralType"
 - "ParseClient"
+- "StringLiteralType"
 member-access:
 dynamic-lookup:
 cross-module:

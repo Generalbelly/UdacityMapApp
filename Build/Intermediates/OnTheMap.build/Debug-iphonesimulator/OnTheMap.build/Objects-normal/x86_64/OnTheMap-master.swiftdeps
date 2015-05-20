@@ -1,5 +1,5 @@
-version: "Apple Swift version 1.2 (swiftlang-602.0.49.6 clang-602.0.49)"
-options: "e7bfb8bf046d1cd5fb3a82cdfc1e8cfd"
+version: "Apple Swift version 1.2 (swiftlang-602.0.53.1 clang-602.0.53)"
+options: "1fb85e29cf86e5f6a0759a166b522189"
 inputs: 
 - "/Users/shimmennobuyoshi/Desktop/OnTheMap/OnTheMap/UdacityAnnotation.swift"
 - "/Users/shimmennobuyoshi/Desktop/OnTheMap/OnTheMap/UIColorExtension.swift"

@@ -7,14 +7,14 @@ class-members:
 - "subtitle"
 - "title"
 top-level:
-- "MKAnnotation"
-- "UdacityStudent"
 - "String"
 - "CLLocationCoordinate2D"
+- "UdacityStudent"
+- "MKAnnotation"
 member-access:
-- "PSo12MKAnnotation"
 - "CSo8NSObject"
 - !private "VSC22CLLocationCoordinate2D"
+- "PSo12MKAnnotation"
 - "C8OnTheMap14UdacityStudent"
 dynamic-lookup:
 cross-module:
