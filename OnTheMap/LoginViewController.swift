@@ -65,7 +65,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
         }
 
         alertController.addAction(action)
-        self.presentViewController(alertController, animated: true, completion: nil)
+
+        dispatch_async(dispatch_get_main_queue()) {
+
+            self.presentViewController(alertController, animated: true, completion: nil)
+
+        }
 
     }
 
@@ -207,7 +212,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
 
             case true:
 
-                self.performSegueWithIdentifier("segueToHome", sender: self)
+                dispatch_async(dispatch_get_main_queue()) {
+
+                    self.performSegueWithIdentifier("segueToHome", sender: self)
+
+                }
 
             default:
                 break
